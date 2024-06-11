@@ -10,17 +10,12 @@ export const upperFirst = (value) => {
   return value
 }
 
-/**
- * Lookup can be `basic` or `extended`. By default the lookup is `extended`.
- */
-export const getTitle = (schema, { lookup = "extended" } = {}) => {
+export const getTitle = (schema) => {
   const fn = useFn()
 
-  if (schema?.title != null) return fn.upperFirst(String(schema.title))
-  if (lookup === "extended") {
-    if (schema?.$anchor != null) return fn.upperFirst(String(schema.$anchor))
-    if (schema?.$id != null) return String(schema.$id)
-  }
+  if (schema?.title) return fn.upperFirst(schema.title)
+  if (schema?.$anchor) return fn.upperFirst(schema.$anchor)
+  if (schema?.$id) return schema.$id
 
   return ""
 }
@@ -121,18 +116,10 @@ export const getType = (schema, processedSchemas = new WeakSet()) => {
   const typeString = Array.isArray(type)
     ? type.map((t) => (t === "array" ? getArrayType() : t)).join(" | ")
     : type === "array"
-      ? getArrayType()
-      : [
-            "null",
-            "boolean",
-            "object",
-            "array",
-            "number",
-            "integer",
-            "string",
-          ].includes(type)
-        ? type
-        : inferType()
+    ? getArrayType()
+    : ["null", "boolean", "object", "array", "number", "string"].includes(type)
+    ? type
+    : inferType()
 
   const handleCombiningKeywords = (keyword, separator) => {
     if (Array.isArray(schema[keyword])) {
@@ -244,25 +231,22 @@ const stringifyConstraintNumberRange = (schema) => {
   const hasMaximum = typeof maximum === "number"
   const hasExclusiveMinimum = typeof exclusiveMinimum === "number"
   const hasExclusiveMaximum = typeof exclusiveMaximum === "number"
-  const isMinExclusive = hasExclusiveMinimum && (!hasMinimum || minimum < exclusiveMinimum) // prettier-ignore
-  const isMaxExclusive = hasExclusiveMaximum && (!hasMaximum || maximum > exclusiveMaximum) // prettier-ignore
+  const isMinExclusive = hasExclusiveMinimum && minimum < exclusiveMinimum
+  const isMaxExclusive = hasExclusiveMaximum && maximum > exclusiveMaximum
 
-  if (
-    (hasMinimum || hasExclusiveMinimum) &&
-    (hasMaximum || hasExclusiveMaximum)
-  ) {
+  if (hasMinimum && hasMaximum) {
     const minSymbol = isMinExclusive ? "(" : "["
     const maxSymbol = isMaxExclusive ? ")" : "]"
     const minValue = isMinExclusive ? exclusiveMinimum : minimum
     const maxValue = isMaxExclusive ? exclusiveMaximum : maximum
     return `${minSymbol}${minValue}, ${maxValue}${maxSymbol}`
   }
-  if (hasMinimum || hasExclusiveMinimum) {
+  if (hasMinimum) {
     const minSymbol = isMinExclusive ? ">" : "≥"
     const minValue = isMinExclusive ? exclusiveMinimum : minimum
     return `${minSymbol} ${minValue}`
   }
-  if (hasMaximum || hasExclusiveMaximum) {
+  if (hasMaximum) {
     const maxSymbol = isMaxExclusive ? "<" : "≤"
     const maxValue = isMaxExclusive ? exclusiveMaximum : maximum
     return `${maxSymbol} ${maxValue}`

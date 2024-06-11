@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom"
 import Enzyme from "enzyme"
-const { default: Adapter } = require("@cfaester/enzyme-adapter-react-18")
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 
 import win from "../../src/core/window"
 
@@ -18,7 +18,7 @@ function copyProps(src, target) {
 
 function setUpDomEnvironment() {
   const jsdom = new JSDOM("<!doctype html><html><body></body></html>", {
-    url: "http://localhost/",
+    url: "http://localhost:8888/",
   })
   const { window } = jsdom
 
@@ -29,7 +29,7 @@ function setUpDomEnvironment() {
   }
   copyProps(win, window) // use UI's built-in window wrapper
   copyProps(window, global)
-
+  
   // https://github.com/jsdom/jsdom/issues/1721
   if (typeof global.window.URL.createObjectURL === "undefined") {
     Object.defineProperty(global.window.URL, "createObjectURL", { value: () => "data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==" })

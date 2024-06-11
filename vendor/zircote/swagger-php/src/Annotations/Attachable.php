@@ -54,7 +54,6 @@ class Attachable extends AbstractAnnotation
         ServerVariable::class,
         Tag::class,
         Trace::class,
-        Webhook::class,
         Xml::class,
         XmlContent::class,
     ];

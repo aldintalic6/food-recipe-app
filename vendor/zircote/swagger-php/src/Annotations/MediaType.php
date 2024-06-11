@@ -39,17 +39,21 @@ class MediaType extends AbstractAnnotation
      *
      * Furthermore, if referencing a schema which contains an example,
      * the example value shall override the example provided by the schema.
+     *
+     * @var mixed
      */
     public $example = Generator::UNDEFINED;
 
     /**
      * Examples of the media type.
      *
-     * Each example should contain a value in the correct format as specified in the parameter encoding.
+     * Each example object should match the media type and specified schema if present.
      * The examples object is mutually exclusive of the example object.
-     * Furthermore, if referencing a schema which contains an example, the examples value shall override the example provided by the schema.
      *
-     * @var array<Examples>
+     * Furthermore, if referencing a schema which contains an example,
+     * the examples value shall override the example provided by the schema.
+     *
+     * @var array<string,Examples>
      */
     public $examples = Generator::UNDEFINED;
 

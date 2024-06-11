@@ -66,17 +66,10 @@ export default class ApiKeyAuth extends React.Component {
           <p>In: <code>{ schema.get("in") }</code></p>
         </Row>
         <Row>
-          <label htmlFor="api_key_value">Value:</label>
+          <label>Value:</label>
           {
             value ? <code> ****** </code>
-                  : <Col>
-                      <Input 
-                        id="api_key_value" 
-                        type="text" 
-                        onChange={ this.onChange } 
-                        autoFocus
-                      />
-                    </Col>
+                  : <Col><Input type="text" onChange={ this.onChange } autoFocus/></Col>
           }
         </Row>
         {

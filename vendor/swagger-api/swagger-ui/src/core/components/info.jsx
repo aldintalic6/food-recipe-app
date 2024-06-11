@@ -89,7 +89,6 @@ class Info extends React.Component {
     const Markdown = getComponent("Markdown", true)
     const Link = getComponent("Link")
     const VersionStamp = getComponent("VersionStamp")
-    const OpenAPIVersion = getComponent("OpenAPIVersion")
     const InfoUrl = getComponent("InfoUrl")
     const InfoBasePath = getComponent("InfoBasePath")
     const License = getComponent("License")
@@ -100,10 +99,7 @@ class Info extends React.Component {
         <hgroup className="main">
           <h2 className="title">
             {title}
-            <span>
-              {version && <VersionStamp version={version} />}
-              <OpenAPIVersion oasVersion="2.0" />
-            </span>
+            {version && <VersionStamp version={version}></VersionStamp>}
           </h2>
           {host || basePath ? (
             <InfoBasePath host={host} basePath={basePath} />

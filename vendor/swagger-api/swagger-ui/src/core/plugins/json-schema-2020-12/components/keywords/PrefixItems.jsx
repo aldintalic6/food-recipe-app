@@ -5,20 +5,14 @@ import React, { useCallback, useState } from "react"
 import classNames from "classnames"
 
 import { schema } from "../../prop-types"
-import {
-  useFn,
-  useComponent,
-  useIsExpandedDeeply,
-  useIsExpanded,
-} from "../../hooks"
+import { useFn, useComponent, useIsExpandedDeeply } from "../../hooks"
 import { JSONSchemaDeepExpansionContext } from "../../context"
 
 const PrefixItems = ({ schema }) => {
   const prefixItems = schema?.prefixItems || []
   const fn = useFn()
-  const isExpanded = useIsExpanded()
   const isExpandedDeeply = useIsExpandedDeeply()
-  const [expanded, setExpanded] = useState(isExpanded || isExpandedDeeply)
+  const [expanded, setExpanded] = useState(isExpandedDeeply)
   const [expandedDeeply, setExpandedDeeply] = useState(false)
   const Accordion = useComponent("Accordion")
   const ExpandDeepButton = useComponent("ExpandDeepButton")

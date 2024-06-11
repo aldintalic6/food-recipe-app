@@ -29,6 +29,8 @@ class OperationId implements ProcessorInterface
 
     /**
      *  If set to <code>true</code> generate ids (md5) instead of clear text operation ids.
+     *
+     * @param bool $hash
      */
     public function setHash(bool $hash): OperationId
     {
@@ -52,24 +54,20 @@ class OperationId implements ProcessorInterface
             }
 
             $context = $operation->_context;
-            if ($context) {
+            if ($context && $context->method) {
                 $source = $context->class ?? $context->interface ?? $context->trait;
                 $operationId = null;
                 if ($source) {
-                    $method = $context->method ? ('::' . $context->method) : '';
                     if ($context->namespace) {
-                        $operationId = $context->namespace . '\\' . $source . $method;
+                        $operationId = $context->namespace . '\\' . $source . '::' . $context->method;
                     } else {
-                        $operationId = $source . $method;
+                        $operationId = $source . '::' . $context->method;
                     }
-                } elseif ($context->method) {
+                } else {
                     $operationId = $context->method;
                 }
-
-                if ($operationId) {
-                    $operationId = strtoupper($operation->method) . '::' . $operation->path . '::' . $operationId;
-                    $operation->operationId = $this->hash ? md5($operationId) : $operationId;
-                }
+                $operationId = strtoupper($operation->method) . '::' . $operation->path . '::' . $operationId;
+                $operation->operationId = $this->hash ? md5($operationId) : $operationId;
             }
         }
     }

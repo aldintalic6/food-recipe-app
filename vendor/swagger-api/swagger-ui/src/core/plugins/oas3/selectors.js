@@ -2,11 +2,10 @@
  * @prettier
  */
 import { OrderedMap, Map, List } from "immutable"
-import escapeRegExp from "lodash/escapeRegExp"
-import constant from "lodash/constant"
+import { createSelector } from "reselect"
 
 import { getDefaultRequestBodyValue } from "./components/request-body"
-import { stringify } from "core/utils"
+import { stringify } from "../../utils"
 
 // Helpers
 
@@ -249,7 +248,7 @@ export const serverEffectiveValue = onlyOAS3((state, locationData) => {
   let str = serverValue
 
   varValues.map((val, key) => {
-    str = str.replace(new RegExp(`{${escapeRegExp(key)}}`, "g"), val)
+    str = str.replace(new RegExp(`{${key}}`, "g"), val)
   })
 
   return str
@@ -296,7 +295,7 @@ export const validateShallowRequired = (
   return missingRequiredKeys
 }
 
-export const validOperationMethods = constant([
+export const validOperationMethods = createSelector(() => [
   "get",
   "put",
   "post",

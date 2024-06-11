@@ -82,10 +82,7 @@ export const withMappedContainer = (getSystem, getStore, memGetComponent) => (co
 
 export const render = (getSystem, getStore, getComponent, getComponents) => (domNode) => {
   const App = getComponent(getSystem, getStore, getComponents)("App", "root")
-  const { createRoot } = ReactDOM
-  const root = createRoot(domNode)
-
-  root.render(<App/>)
+  ReactDOM.render(<App/>, domNode)
 }
 
 export const getComponent = (getSystem, getStore, getComponents) => (componentName, container, config = {}) => {

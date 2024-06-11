@@ -18,11 +18,11 @@ describe("OAuth2 Password flow", function() {
       .get("#password_type")
       .select("basic")
 
-      .get("#client_id_password")
+      .get("#client_id")
       .clear()
       .type("application")
 
-      .get("#client_secret_password")
+      .get("#client_secret")
       .clear()
       .type("secret")
 
@@ -75,11 +75,11 @@ describe("OAuth2 Password flow", function() {
       .get("#password_type")
       .select("request-body")
 
-      .get("#client_id_password")
+      .get("#client_id")
       .clear()
       .type("application")
 
-      .get("#client_secret_password")
+      .get("#client_secret")
       .clear()
       .type("secret")
 

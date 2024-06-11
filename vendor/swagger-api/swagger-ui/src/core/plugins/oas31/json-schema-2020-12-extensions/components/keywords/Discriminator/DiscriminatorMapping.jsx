@@ -29,4 +29,8 @@ DiscriminatorMapping.propTypes = {
   }),
 }
 
+DiscriminatorMapping.defaultProps = {
+  mapping: undefined,
+}
+
 export default DiscriminatorMapping

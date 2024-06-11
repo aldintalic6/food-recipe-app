@@ -6,7 +6,7 @@
 
 namespace OpenApi\Annotations;
 
-use OpenApi\Annotations as OA;
+use OpenApi\Generator;
 
 /**
  * Shorthand for a json response.
@@ -17,6 +17,16 @@ use OpenApi\Annotations as OA;
  */
 class JsonContent extends Schema
 {
+    /**
+     * An associative array of Examples attributes.
+     *
+     * The keys represent the name of the example and the values are instances of the Examples attribute.
+     * Each example is used to show how the content of the request or response should look like.
+     *
+     * @var array<string,Examples>
+     */
+    public $examples = Generator::UNDEFINED;
+
     /**
      * @inheritdoc
      */

@@ -31,12 +31,8 @@ describe("OpenAPI 3.0 Allow Empty Values in Request Body", () => {
       .get(".try-out__btn")
       .click()
       // Request Body
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .json-schema-form-item-remove")
-      .click()
       .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .parameter__empty_value_toggle input")
       .should("be.checked")
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(6) > .parameters-col_description select")
-      .select("--")
       .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(6) > .parameters-col_description .parameter__empty_value_toggle input")
       .should("be.checked")
   })
@@ -53,8 +49,6 @@ describe("OpenAPI 3.0 Allow Empty Values in Request Body", () => {
       .get(".try-out__btn")
       .click()
       // Request Body
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .json-schema-form-item-remove")
-      .click()
       .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .parameter__empty_value_toggle input")
       .should("be.checked")
       .uncheck()
@@ -73,11 +67,9 @@ describe("OpenAPI 3.0 Allow Empty Values in Request Body", () => {
       // Expand Try It Out
       .get(".try-out__btn")
       .click()
-      // Remove example values
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .json-schema-form-item-remove")
+      // add item to pass required validation
+      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(4) > .parameters-col_description button")
       .click()
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(6) > .parameters-col_description select")
-      .select("--")
       // Execute
       .get(".execute.opblock-control__btn")
       .click()
@@ -100,11 +92,11 @@ describe("OpenAPI 3.0 Allow Empty Values in Request Body", () => {
       .get(".try-out__btn")
       .click()
       // Request Body
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .json-schema-form-item-remove")
-      .click()
       .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .parameter__empty_value_toggle input")
       .uncheck()
       // add item to pass required validation
+      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(4) > .parameters-col_description button")
+      .click()
       .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(4) input")
       .clear()
       // Execute
@@ -130,14 +122,15 @@ describe("OpenAPI 3.0 Allow Empty Values in Request Body", () => {
       .get(".try-out__btn")
       .click()
       // Request Body
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .json-schema-form-item-remove")
-      .click()
       .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(5) > .parameters-col_description .parameter__empty_value_toggle input")
       .uncheck()
-      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(6) > .parameters-col_description select")
-      .select("--")
       .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(6) > .parameters-col_description .parameter__empty_value_toggle input")
       .uncheck()
+      // add item to pass required validation
+      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(4) > .parameters-col_description button")
+      .click()
+      .get(".opblock-body .opblock-section .opblock-section-request-body .parameters:nth-child(4) input")
+      .clear()
       // Execute
       .get(".execute.opblock-control__btn")
       .click()

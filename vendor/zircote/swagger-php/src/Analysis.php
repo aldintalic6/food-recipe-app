@@ -62,7 +62,7 @@ class Analysis
      */
     public $context = null;
 
-    public function __construct(array $annotations = [], ?Context $context = null)
+    public function __construct(array $annotations = [], Context $context = null)
     {
         $this->annotations = new \SplObjectStorage();
         $this->context = $context;
@@ -75,8 +75,6 @@ class Analysis
         if ($this->annotations->contains($annotation)) {
             return;
         }
-
-        $context->ensureRoot($this->context);
 
         if ($annotation instanceof OA\OpenApi) {
             $this->openapi = $this->openapi ?: $annotation;
@@ -327,27 +325,14 @@ class Analysis
      */
     public function getSchemaForSource(string $fqdn): ?OA\Schema
     {
-        return $this->getAnnotationForSource($fqdn, OA\Schema::class);
-    }
-
-    /**
-     * @template T of OA\AbstractAnnotation
-     *
-     * @param  string          $fqdn  the source class/interface/trait
-     * @param  class-string<T> $class
-     * @return T|null
-     */
-    public function getAnnotationForSource(string $fqdn, string $class): ?OA\AbstractAnnotation
-    {
         $fqdn = '\\' . ltrim($fqdn, '\\');
 
         foreach ([$this->classes, $this->interfaces, $this->traits, $this->enums] as $definitions) {
             if (array_key_exists($fqdn, $definitions)) {
                 $definition = $definitions[$fqdn];
                 if (is_iterable($definition['context']->annotations)) {
-                    /** @var OA\AbstractAnnotation $annotation */
                     foreach (array_reverse($definition['context']->annotations) as $annotation) {
-                        if (is_a($annotation, $class) && $annotation->isRoot($class) && !$annotation->_context->is('generated')) {
+                        if ($annotation instanceof OA\Schema && $annotation->isRoot(OA\Schema::class) && !$annotation->_context->is('generated')) {
                             return $annotation;
                         }
                     }
@@ -371,7 +356,8 @@ class Analysis
             return $context;
         }
 
-        throw new \RuntimeException('Annotation has no context - did you use addAnnotation()/addAnnotations()');
+        // Weird, did you use the addAnnotation/addAnnotations methods?
+        throw new \Exception('Annotation has no context');
     }
 
     /**
@@ -402,7 +388,7 @@ class Analysis
      * Split the annotation into two analysis.
      * One with annotations that are merged and one with annotations that are not merged.
      *
-     * @return \stdClass {merged: Analysis, unmerged: Analysis}
+     * @return object {merged: Analysis, unmerged: Analysis}
      */
     public function split()
     {

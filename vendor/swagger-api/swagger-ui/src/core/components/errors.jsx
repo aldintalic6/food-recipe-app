@@ -84,7 +84,7 @@ const ThrownErrorItem = ( { error, jumpToLine } ) => {
     )
   }
 
-const SpecErrorItem = ( { error, jumpToLine = null } ) => {
+const SpecErrorItem = ( { error, jumpToLine } ) => {
   let locationMessage = null
 
   if(error.get("path")) {
@@ -124,6 +124,10 @@ function toTitleCase(str) {
 ThrownErrorItem.propTypes = {
   error: PropTypes.object.isRequired,
   jumpToLine: PropTypes.func
+}
+
+ThrownErrorItem.defaultProps = {
+  jumpToLine: null
 }
 
 SpecErrorItem.propTypes = {

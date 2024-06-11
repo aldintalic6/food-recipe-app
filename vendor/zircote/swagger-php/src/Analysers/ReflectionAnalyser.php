@@ -32,14 +32,9 @@ class ReflectionAnalyser implements AnalyserInterface
      */
     public function __construct(array $annotationFactories = [])
     {
-        $this->annotationFactories = [];
-        foreach ($annotationFactories as $annotationFactory) {
-            if ($annotationFactory->isSupported()) {
-                $this->annotationFactories[] = $annotationFactory;
-            }
-        }
+        $this->annotationFactories = $annotationFactories;
         if (!$this->annotationFactories) {
-            throw new \RuntimeException('No suitable annotation factory found. At least one of "Doctrine Annotations" or PHP 8.1 are required');
+            throw new \InvalidArgumentException('Need at least one annotation factory');
         }
     }
 

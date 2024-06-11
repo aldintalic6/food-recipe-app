@@ -1,6 +1,6 @@
 import { fromJS, List } from "immutable"
-import { fromJSOrdered, validateParam, paramToValue, paramToIdentifier } from "core/utils"
-import win from "core/window"
+import { fromJSOrdered, validateParam, paramToValue } from "core/utils"
+import win from "../../window"
 
 // selector-in-reducer is suboptimal, but `operationWithMeta` is more of a helper
 import {
@@ -27,6 +27,7 @@ import {
   CLEAR_VALIDATE_PARAMS,
   SET_SCHEME
 } from "./actions"
+import { paramToIdentifier } from "../../utils"
 
 export default {
 
@@ -62,7 +63,7 @@ export default {
 
     return state.setIn(
       ["meta", "paths", ...pathMethod, "parameters", paramKey, valueKey],
-      fromJS(value)
+      value
     )
   },
 
@@ -123,8 +124,8 @@ export default {
     let newState = state.setIn( [ "responses", path, method ], fromJSOrdered(result) )
 
     // ImmutableJS messes up Blob. Needs to reset its value.
-    if (win.Blob && result.data instanceof win.Blob) {
-      newState = newState.setIn( [ "responses", path, method, "text" ], result.data)
+    if (win.Blob && res.data instanceof win.Blob) {
+      newState = newState.setIn( [ "responses", path, method, "text" ], res.data)
     }
     return newState
   },

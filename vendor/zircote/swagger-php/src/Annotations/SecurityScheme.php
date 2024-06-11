@@ -34,7 +34,7 @@ class SecurityScheme extends AbstractAnnotation
     /**
      * The type of the security scheme.
      *
-     * @var string|non-empty-array<string>
+     * @var string
      */
     public $type = Generator::UNDEFINED;
 

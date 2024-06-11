@@ -1,6 +1,5 @@
-import { Map } from "immutable"
 import win from "../../window"
-
+import { Map } from "immutable"
 
 /**
  * if duplicate key name existed from FormData entries,
@@ -50,14 +49,15 @@ const escapePowershell = (str) => {
     return str
   }
   if (/\n/.test(str)) {
-    const escaped = str.replace(/`/g, "``").replace(/\$/g, "`$")
-    return `@"\n${escaped}\n"@`
+    return "@\"\n" + str.replace(/"/g, "\\\"").replace(/`/g, "``").replace(/\$/, "`$") + "\n\"@"
   }
-  if (!/^[_\/-]/.test(str)) { // eslint-disable-line no-useless-escape
-    const escaped = str.replace(/'/g, "''")
-    return `'${escaped}'`
-  }
-  return str
+  // eslint-disable-next-line no-useless-escape
+  if (!/^[_\/-]/g.test(str))
+    return "'" + str
+      .replace(/"/g, "\"\"")
+      .replace(/'/g, "''") + "'"
+  else
+    return str
 }
 
 function getStringBodyOfMap(request) {
@@ -111,18 +111,7 @@ const curlify = (request, escape, newLine, ext = "") => {
         addNewLine()
         addIndent()
         addWordsWithoutLeadingSpace("-F")
-
-        /**
-         * SwaggerClient produces specialized sub-class of File class, that only
-         * accepts string data and retain this data in `data`
-         * public property throughout the lifecycle of its instances.
-         *
-         * This sub-class is exclusively used only when Encoding Object
-         * is defined within the Media Type Object (OpenAPI 3.x.y).
-         */
-        if (v instanceof win.File && typeof v.valueOf() === "string") {
-          addWords(`${extractedKey}=${v.data}${v.type ? `;type=${v.type}` : ""}`)
-        } else if (v instanceof win.File) {
+        if (v instanceof win.File) {
           addWords(`${extractedKey}=@${v.name}${v.type ? `;type=${v.type}` : ""}`)
         } else {
           addWords(`${extractedKey}=${v}`)

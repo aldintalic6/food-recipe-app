@@ -5,14 +5,14 @@ import {
   serverVariableValue,
   serverVariables,
   serverEffectiveValue
-} from "core/plugins/oas3/selectors"
+} from "corePlugins/oas3/selectors"
 
-import reducers from "core/plugins/oas3/reducers"
+import reducers from "corePlugins/oas3/reducers"
 
 import {
   setSelectedServer,
   setServerVariableValue,
-} from "core/plugins/oas3/actions"
+} from "corePlugins/oas3/actions"
 
 describe("OAS3 plugin - state", function() {
   describe("action + reducer + selector integration", function() {

@@ -12,11 +12,6 @@ use OpenApi\Generator;
 
 interface AnnotationFactoryInterface
 {
-    /**
-     * Checks if this factory is supported by the current runtime.
-     */
-    public function isSupported(): bool;
-
     public function setGenerator(Generator $generator): void;
 
     /**

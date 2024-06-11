@@ -6,7 +6,7 @@
 
 namespace OpenApi\Annotations;
 
-use OpenApi\Annotations as OA;
+use OpenApi\Generator;
 
 /**
  * Shorthand for a xml response.
@@ -17,6 +17,11 @@ use OpenApi\Annotations as OA;
  */
 class XmlContent extends Schema
 {
+    /**
+     * @var array<string,Examples>
+     */
+    public $examples = Generator::UNDEFINED;
+
     /**
      * @inheritdoc
      */

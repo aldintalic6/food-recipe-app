@@ -52,7 +52,7 @@ class TokenScanner
         while (false !== ($token = $this->nextToken($tokens))) {
             // named arguments
             $nextToken = $this->nextToken($tokens);
-            if (($token !== '}' && $nextToken === ':') || $nextToken === false) {
+            if ($nextToken === ':' || $nextToken === false) {
                 continue;
             }
             do {

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit520ec641162c1c06cc2513350342c39f
+class ComposerStaticInitf89e423e30c17e6add84d939179bcce5
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -23,6 +23,7 @@ class ComposerStaticInit520ec641162c1c06cc2513350342c39f
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'Psr\\Cache\\' => 10,
         ),
         'O' => 
         array (
@@ -31,6 +32,11 @@ class ComposerStaticInit520ec641162c1c06cc2513350342c39f
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Lexer\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
         ),
     );
 
@@ -51,6 +57,10 @@ class ComposerStaticInit520ec641162c1c06cc2513350342c39f
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
         'OpenApi\\' => 
         array (
             0 => __DIR__ . '/..' . '/zircote/swagger-php/src',
@@ -58,6 +68,14 @@ class ComposerStaticInit520ec641162c1c06cc2513350342c39f
         'Firebase\\JWT\\' => 
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
+        'Doctrine\\Common\\Lexer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/lexer/src',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
         ),
     );
 
@@ -68,9 +86,9 @@ class ComposerStaticInit520ec641162c1c06cc2513350342c39f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit520ec641162c1c06cc2513350342c39f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit520ec641162c1c06cc2513350342c39f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit520ec641162c1c06cc2513350342c39f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf89e423e30c17e6add84d939179bcce5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf89e423e30c17e6add84d939179bcce5::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf89e423e30c17e6add84d939179bcce5::$classMap;
 
         }, null, ClassLoader::class);
     }

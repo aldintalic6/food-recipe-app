@@ -2,9 +2,9 @@
  * @prettier
  */
 
-const { gitDescribeSync } = require("git-describe")
+import { gitDescribeSync } from "git-describe"
 
-function getRepoInfo() {
+export function getRepoInfo() {
   try {
     return gitDescribeSync(__dirname)
   } catch (e) {
@@ -14,14 +14,4 @@ function getRepoInfo() {
       dirty: false,
     }
   }
-}
-
-function getDevtool(sourcemaps, minimize) {
-  if (!sourcemaps) return false
-  return minimize ? "source-map" : "cheap-module-source-map"
-}
-
-module.exports = {
-  getRepoInfo,
-  getDevtool,
 }

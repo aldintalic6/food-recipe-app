@@ -16,7 +16,7 @@ class Components extends \OpenApi\Annotations\Components
      * @param Response[]|null                                $responses
      * @param Parameter[]|null                               $parameters
      * @param RequestBody[]|null                             $requestBodies
-     * @param array<Examples>|null                           $examples
+     * @param Examples[]|null                                $examples
      * @param Header[]|null                                  $headers
      * @param SecurityScheme[]|null                          $securitySchemes
      * @param Link[]|null                                    $links

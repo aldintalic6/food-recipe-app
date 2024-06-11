@@ -1,10 +1,11 @@
 import React from "react"
 import { shallow } from "enzyme"
-import ResponseBody from "core/components/response-body"
+import ResponseBody from "components/response-body"
 
 describe("<ResponseBody />", function () {
+  const highlightCodeComponent = () => null
   const components = {
-    HighlightCode: () => null
+    highlightCode: highlightCodeComponent
   }
   const props = {
     getComponent: c => components[c],
@@ -14,42 +15,34 @@ describe("<ResponseBody />", function () {
     props.contentType = "application/json"
     props.content = "{\"key\": \"a test value\"}"
     const wrapper = shallow(<ResponseBody {...props} />)
-    expect(wrapper.find("HighlightCode").length).toEqual(1)
+    expect(wrapper.find("highlightCodeComponent").length).toEqual(1)
   })
 
   it("renders ResponseBody as 'text/html'", function () {
     props.contentType = "application/json"
     props.content = "<b>Result</b>"
     const wrapper = shallow(<ResponseBody {...props} />)
-    expect(wrapper.find("HighlightCode").length).toEqual(1)
+    expect(wrapper.find("highlightCodeComponent").length).toEqual(1)
   })
 
   it("renders ResponseBody as 'image/svg'", function () {
     props.contentType = "image/svg"
     const wrapper = shallow(<ResponseBody {...props} />)
-    expect(wrapper.find("HighlightCode").length).toEqual(0)
+    console.warn(wrapper.debug())
+    expect(wrapper.find("highlightCodeComponent").length).toEqual(0)
   })
 
   it("should render a copyable highlightCodeComponent for text types", function () {
     props.contentType = "text/plain"
     props.content = "test text"
     const wrapper = shallow(<ResponseBody {...props} />)
-    expect(wrapper.find("HighlightCode[canCopy]").length).toEqual(1)
+    console.warn(wrapper.debug())
+    expect(wrapper.find("highlightCodeComponent[canCopy]").length).toEqual(1)
   })
 
-  it("should render Download file link for non-empty Blob response", function () {
+  it("should render Download file link for non-empty response", function () {
     props.contentType = "application/octet-stream"
     props.content = new Blob(["\"test\""], { type: props.contentType })
-    const wrapper = shallow(<ResponseBody {...props} />)
-    expect(wrapper.text()).toMatch(/Download file/)
-  })
-
-  it("should render Download file link for non-empty text response", function () {
-    props.contentType = "text/plain"
-    props.content = "test text"
-    props.headers = {
-      "Content-Disposition": "attachment; filename=\"test.txt\"",
-    }
     const wrapper = shallow(<ResponseBody {...props} />)
     expect(wrapper.text()).toMatch(/Download file/)
   })

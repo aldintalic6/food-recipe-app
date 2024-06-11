@@ -18,7 +18,7 @@ if (DomPurify.addHook) {
   })
 }
 
-function Markdown({ source, className = "", getConfigs = () => ({ useUnsafeMarkdown: false }) }) {
+function Markdown({ source, className = "", getConfigs }) {
   if (typeof source !== "string") {
     return null
   }
@@ -49,6 +49,10 @@ Markdown.propTypes = {
   source: PropTypes.string.isRequired,
   className: PropTypes.string,
   getConfigs: PropTypes.func,
+}
+
+Markdown.defaultProps = {
+  getConfigs: () => ({ useUnsafeMarkdown: false }),
 }
 
 export default Markdown

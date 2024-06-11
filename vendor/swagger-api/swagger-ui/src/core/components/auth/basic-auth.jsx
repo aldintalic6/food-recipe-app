@@ -65,34 +65,20 @@ export default class BasicAuth extends React.Component {
           <Markdown source={ schema.get("description") } />
         </Row>
         <Row>
-          <label htmlFor="auth_username">Username:</label>
+          <label>Username:</label>
           {
             username ? <code> { username } </code>
-                     : <Col>
-                          <Input 
-                            id="auth_username" 
-                            type="text" 
-                            required="required" 
-                            name="username" 
-                            onChange={ this.onChange } 
-                            autoFocus
-                          />
-                        </Col>
+                     : <Col><Input type="text" required="required" name="username" onChange={ this.onChange } autoFocus/></Col>
           }
         </Row>
         <Row>
-          <label htmlFor="auth_password">Password:</label>
+          <label>Password:</label>
             {
               username ? <code> ****** </code>
-                       : <Col>
-                            <Input 
-                              id="auth_password"
-                              autoComplete="new-password"
-                              name="password"
-                              type="password"
-                              onChange={ this.onChange }
-                            />
-                          </Col>
+                       : <Col><Input autoComplete="new-password"
+                                     name="password"
+                                     type="password"
+                                     onChange={ this.onChange }/></Col>
             }
         </Row>
         {

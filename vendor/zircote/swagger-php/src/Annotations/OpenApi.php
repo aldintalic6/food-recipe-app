@@ -99,13 +99,6 @@ class OpenApi extends AbstractAnnotation
     public $externalDocs = Generator::UNDEFINED;
 
     /**
-     * The available webhooks for the API.
-     *
-     * @var Webhook[]
-     */
-    public $webhooks = Generator::UNDEFINED;
-
-    /**
      * @var Analysis
      */
     public $_analysis = Generator::UNDEFINED;
@@ -113,7 +106,7 @@ class OpenApi extends AbstractAnnotation
     /**
      * @inheritdoc
      */
-    public static $_required = ['openapi', 'info'];
+    public static $_required = ['openapi', 'info', 'paths'];
 
     /**
      * @inheritdoc
@@ -125,7 +118,6 @@ class OpenApi extends AbstractAnnotation
         Components::class => 'components',
         Tag::class => ['tags'],
         ExternalDocumentation::class => 'externalDocs',
-        Webhook::class => ['webhooks', 'webhook'],
         Attachable::class => ['attachables'],
     ];
 
@@ -137,7 +129,7 @@ class OpenApi extends AbstractAnnotation
     /**
      * @inheritdoc
      */
-    public function validate(?array $stack = null, ?array $skip = null, string $ref = '', $context = null): bool
+    public function validate(array $stack = null, array $skip = null, string $ref = '', $context = null): bool
     {
         if ($stack !== null || $skip !== null || $ref !== '') {
             $this->_context->logger->warning('Nested validation for ' . $this->identity() . ' not allowed');
@@ -147,21 +139,6 @@ class OpenApi extends AbstractAnnotation
 
         if (!in_array($this->openapi, self::SUPPORTED_VERSIONS)) {
             $this->_context->logger->warning('Unsupported OpenAPI version "' . $this->openapi . '". Allowed versions are: ' . implode(', ', self::SUPPORTED_VERSIONS));
-
-            return false;
-        }
-
-        /* paths is optional in 3.1.0 */
-        if ($this->openapi === self::VERSION_3_0_0 && Generator::isDefault($this->paths)) {
-            $this->_context->logger->warning('Required @OA\PathItem() not found');
-        }
-
-        if ($this->openapi === self::VERSION_3_1_0
-            && Generator::isDefault($this->paths)
-            && Generator::isDefault($this->webhooks)
-            && Generator::isDefault($this->components)
-        ) {
-            $this->_context->logger->warning("At least one of 'Required @OA\PathItem(), @OA\Components() or @OA\Webhook() not found'");
 
             return false;
         }
@@ -252,20 +229,5 @@ class OpenApi extends AbstractAnnotation
         }
 
         throw new \Exception('$ref "' . $unresolved . '" not found');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        $data = parent::jsonSerialize();
-
-        if (!$this->_context->isVersion(OpenApi::VERSION_3_1_0)) {
-            unset($data->webhooks);
-        }
-
-        return $data;
     }
 }

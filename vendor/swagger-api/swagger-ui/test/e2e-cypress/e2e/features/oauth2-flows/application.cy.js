@@ -14,15 +14,6 @@ describe("OAuth2 Application flow", function() {
       .should("have.id", "oauth_username")
   })
 
-  it("should have specific OAuth2 description for authorization button", () => {
-    cy
-      .visit("/?url=http://localhost:3231/swagger.yaml")
-      .get(".btn.authorize")
-      .click()
-      .get(".auth-btn-wrapper > .authorize")
-      .should("have.attr", "aria-label", "Apply given OAuth2 credentials")
-  })
-
   it("should make an application flow Authorization header request", () => {
     cy
       .visit("/?url=http://localhost:3231/swagger.yaml")
@@ -30,11 +21,11 @@ describe("OAuth2 Application flow", function() {
       .click()
 
       .get("div.modal-ux-content > div:nth-child(2)").within(() => {
-        cy.get("#client_id_application")
+        cy.get("#client_id")
           .clear()
           .type("confidentialApplication")
 
-          .get("#client_secret_application")
+          .get("#client_secret")
           .clear()
           .type("topSecret")
 

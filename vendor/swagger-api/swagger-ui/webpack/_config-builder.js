@@ -2,14 +2,14 @@
  * @prettier
  */
 
-const path = require("path")
-const deepExtend = require("deep-extend")
-const webpack = require("webpack")
-const TerserPlugin = require("terser-webpack-plugin")
-const nodeExternals = require("webpack-node-externals")
+import path from "path"
+import deepExtend from "deep-extend"
+import webpack from "webpack"
+import TerserPlugin from "terser-webpack-plugin"
+import nodeExternals from "webpack-node-externals"
 
-const { getRepoInfo, getDevtool } = require("./_helpers")
-const pkg = require("../package.json")
+import { getRepoInfo } from "./_helpers"
+import pkg from "../package.json"
 
 const projectBasePath = path.join(__dirname, "../")
 
@@ -26,21 +26,14 @@ const baseRules = [
       cacheDirectory: true,
     },
   },
+  { test: /\.(txt|yaml)$/, type: "asset/source" },
   {
-    test: /\.(txt|yaml)$/,
-    type: "asset/source",
-  },
-  {
-    test: /\.svg$/,
-    use: ["@svgr/webpack"],
-  },
-  {
-    test: /\.(png|jpg|jpeg|gif)$/,
+    test: /\.(png|jpg|jpeg|gif|svg)$/,
     type: "asset/inline",
   },
 ]
 
-function buildConfig(
+export default function buildConfig(
   {
     minimize = true,
     mangle = true,
@@ -129,7 +122,13 @@ function buildConfig(
         },
       },
 
-      devtool: getDevtool(sourcemaps, minimize),
+      // If we're mangling, size is a concern -- so use trace-only sourcemaps
+      // Otherwise, provide heavy souremaps suitable for development
+      devtool: sourcemaps
+        ? minimize
+          ? "nosources-source-map"
+          : "cheap-module-source-map"
+        : false,
 
       performance: {
         hints: "error",
@@ -143,15 +142,7 @@ function buildConfig(
           (compiler) =>
             new TerserPlugin({
               terserOptions: {
-                sourceMap: sourcemaps,
                 mangle: !!mangle,
-                keep_classnames:
-                  !customConfig.mode || customConfig.mode === "production",
-                keep_fnames:
-                  !customConfig.mode || customConfig.mode === "production",
-                output: {
-                  comments: false,
-                },
               },
             }).apply(compiler),
         ],
@@ -165,5 +156,3 @@ function buildConfig(
 
   return completeConfig
 }
-
-module.exports = buildConfig

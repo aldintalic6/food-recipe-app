@@ -57,8 +57,7 @@ class Schema extends AbstractAnnotation
 
     /**
      * The maximum number of properties allowed in an object instance.
-     * An object instance is valid against this property if its number of properties is less than, or equal to, the
-     * value of this attribute.
+     * An object instance is valid against this property if its number of properties is less than, or equal to, the value of this attribute.
      *
      * @var int
      */
@@ -66,8 +65,7 @@ class Schema extends AbstractAnnotation
 
     /**
      * The minimum number of properties allowed in an object instance.
-     * An object instance is valid against this property if its number of properties is greater than, or equal to, the
-     * value of this attribute.
+     * An object instance is valid against this property if its number of properties is greater than, or equal to, the value of this attribute.
      *
      * @var int
      */
@@ -93,11 +91,9 @@ class Schema extends AbstractAnnotation
     /**
      * The type of the schema/property.
      *
-     * OpenApi v3.0: The value MUST be one of "string", "number", "integer", "boolean", "array" or "object".
+     * The value MUST be one of "string", "number", "integer", "boolean", "array" or "object".
      *
-     * Since OpenApi v3.1 an array of types may be used.
-     *
-     * @var string|non-empty-array<string>
+     * @var string
      */
     public $type = Generator::UNDEFINED;
 
@@ -123,9 +119,9 @@ class Schema extends AbstractAnnotation
      * - ssv: space separated values foo bar.
      * - tsv: tab separated values foo\tbar.
      * - pipes: pipe separated values foo|bar.
-     * - multi: corresponds to multiple parameter instances instead of multiple values for a single instance
-     * foo=bar&foo=baz. This is valid only for parameters of type <code>query</code> or <code>formData</code>. Default
-     * value is csv.
+     * - multi: corresponds to multiple parameter instances instead of multiple values for a single instance foo=bar&foo=baz.
+     *          This is valid only for parameters of type <code>query</code> or <code>formData</code>.
+     * Default value is csv.
      *
      * @var string
      */
@@ -135,6 +131,8 @@ class Schema extends AbstractAnnotation
      * Sets a default value to the parameter. The type of the value depends on the defined type.
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor101)
+     *
+     * @var mixed
      */
     public $default = Generator::UNDEFINED;
 
@@ -154,7 +152,7 @@ class Schema extends AbstractAnnotation
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor17)
      *
-     * @var bool|int|float
+     * @var bool
      */
     public $exclusiveMaximum = Generator::UNDEFINED;
 
@@ -174,15 +172,14 @@ class Schema extends AbstractAnnotation
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor21)
      *
-     * @var bool|int|float
+     * @var bool
      */
     public $exclusiveMinimum = Generator::UNDEFINED;
 
     /**
      * The maximum length of a string property.
      *
-     * A string instance is valid against this property if its length is less than, or equal to, the value of this
-     * attribute.
+     * A string instance is valid against this property if its length is less than, or equal to, the value of this attribute.
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor26)
      *
@@ -193,8 +190,7 @@ class Schema extends AbstractAnnotation
     /**
      * The minimum length of a string property.
      *
-     * A string instance is valid against this property if its length is greater than, or equal to, the value of this
-     * attribute.
+     * A string instance is valid against this property if its length is greater than, or equal to, the value of this attribute.
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor29)
      *
@@ -212,8 +208,7 @@ class Schema extends AbstractAnnotation
     /**
      * The maximum number of items allowed in an array property.
      *
-     * An array instance is valid against this property if its number of items is less than, or equal to, the value of
-     * this attribute.
+     * An array instance is valid against this property if its number of items is less than, or equal to, the value of this attribute.
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor42)
      *
@@ -224,8 +219,7 @@ class Schema extends AbstractAnnotation
     /**
      * The minimum number of items allowed in an array property.
      *
-     * An array instance is valid against this property if its number of items is greater than, or equal to, the value
-     * of this attribute.
+     * An array instance is valid against this property if its number of items is greater than, or equal to, the value of this attribute.
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor45)
      *
@@ -247,12 +241,11 @@ class Schema extends AbstractAnnotation
     /**
      * A collection of allowable values for a property.
      *
-     * A property instance is valid against this attribute if its value is one of the values specified in this
-     * collection.
+     * A property instance is valid against this attribute if its value is one of the values specified in this collection.
      *
      * @see [JSON schema validation](http://json-schema.org/latest/json-schema-validation.html#anchor76)
      *
-     * @var array<string|int|float|bool|\UnitEnum>|class-string
+     * @var string[]|int[]|float[]|\UnitEnum[]|class-string
      */
     public $enum = Generator::UNDEFINED;
 
@@ -323,32 +316,16 @@ class Schema extends AbstractAnnotation
      *
      * To represent examples that cannot naturally be represented in JSON or YAML, a string value can be used to
      * contain the example with escaping where necessary.
+     *
+     * @var mixed
      */
     public $example = Generator::UNDEFINED;
-
-    /**
-     * Examples of the schema.
-     *
-     * Each example should contain a value in the correct format as specified in the parameter encoding.
-     * The examples object is mutually exclusive of the example object.
-     * Furthermore, if referencing a schema which contains an example, the examples value shall override the example provided by the schema.
-     *
-     * @since 3.1.0
-     *
-     * @var array<Examples>
-     */
-    public $examples = Generator::UNDEFINED;
 
     /**
      * Allows sending a null value for the defined schema.
      * Default value is false.
      *
-     * This must not be used when using OpenApi version 3.1,
-     * instead make the "type" property an array and add "null" as a possible type.
-     *
      * @var bool
-     *
-     * @see https://www.openapis.org/blog/2021/02/16/migrating-from-openapi-3-0-to-3-1-0
      */
     public $nullable = Generator::UNDEFINED;
 
@@ -423,6 +400,8 @@ class Schema extends AbstractAnnotation
 
     /**
      * http://json-schema.org/draft/2020-12/json-schema-validation.html#rfc.section.6.1.3.
+     *
+     * @var mixed
      */
     public $const = Generator::UNDEFINED;
 
@@ -436,9 +415,9 @@ class Schema extends AbstractAnnotation
         'format' => 'string',
         'collectionFormat' => ['csv', 'ssv', 'tsv', 'pipes', 'multi'],
         'maximum' => 'number',
-        'exclusiveMaximum' => 'boolean|integer|number',
+        'exclusiveMaximum' => 'boolean',
         'minimum' => 'number',
-        'exclusiveMinimum' => 'boolean|integer|number',
+        'exclusiveMinimum' => 'boolean',
         'maxLength' => 'integer',
         'minLength' => 'integer',
         'pattern' => 'string',
@@ -459,7 +438,6 @@ class Schema extends AbstractAnnotation
         Items::class => 'items',
         Property::class => ['properties', 'property'],
         ExternalDocumentation::class => 'externalDocs',
-        Examples::class => ['examples', 'example'],
         Xml::class => 'xml',
         AdditionalProperties::class => 'additionalProperties',
         Attachable::class => ['attachables'],
@@ -484,9 +462,8 @@ class Schema extends AbstractAnnotation
     {
         $data = parent::jsonSerialize();
 
-        if ($this->_context->isVersion(OpenApi::VERSION_3_0_0)) {
-            unset($data->examples);
-            if (isset($data->const)) {
+        if (isset($data->const)) {
+            if ($this->_context->isVersion(OpenApi::VERSION_3_0_0)) {
                 $data->enum = [$data->const];
                 unset($data->const);
             }
@@ -504,14 +481,6 @@ class Schema extends AbstractAnnotation
             $this->_context->logger->warning('@OA\\Items() is required when ' . $this->identity() . ' has type "array" in ' . $this->_context);
 
             return false;
-        }
-
-        if ($this->_context->isVersion(OpenApi::VERSION_3_0_0)) {
-            if (!Generator::isDefault($this->examples)) {
-                $this->_context->logger->warning($this->identity() . ' is only allowed for ' . OpenApi::VERSION_3_1_0);
-
-                return false;
-            }
         }
 
         return parent::validate($stack, $skip, $ref, $context);

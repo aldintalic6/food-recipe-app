@@ -23,7 +23,6 @@ const Info = ({ getComponent, specSelectors }) => {
   const Markdown = getComponent("Markdown", true)
   const Link = getComponent("Link")
   const VersionStamp = getComponent("VersionStamp")
-  const OpenAPIVersion = getComponent("OpenAPIVersion")
   const InfoUrl = getComponent("InfoUrl")
   const InfoBasePath = getComponent("InfoBasePath")
   const License = getComponent("License", true)
@@ -35,10 +34,7 @@ const Info = ({ getComponent, specSelectors }) => {
       <hgroup className="main">
         <h2 className="title">
           {title}
-          <span>
-            {version && <VersionStamp version={version} />}
-            <OpenAPIVersion oasVersion="3.1" />
-          </span>
+          {version && <VersionStamp version={version}></VersionStamp>}
         </h2>
 
         {(host || basePath) && <InfoBasePath host={host} basePath={basePath} />}

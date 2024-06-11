@@ -26,20 +26,10 @@ class DocBlockParser
      */
     public function __construct(array $aliases = [])
     {
-        if (DocBlockParser::isEnabled()) {
-            $docParser = new DocParser();
-            $docParser->setIgnoreNotImportedAnnotations(true);
-            $docParser->setImports($aliases);
-            $this->docParser = $docParser;
-        }
-    }
-
-    /**
-     * Check if we can process annotations.
-     */
-    public static function isEnabled(): bool
-    {
-        return class_exists('Doctrine\\Common\\Annotations\\DocParser');
+        $docParser = new DocParser();
+        $docParser->setIgnoreNotImportedAnnotations(true);
+        $docParser->setImports($aliases);
+        $this->docParser = $docParser;
     }
 
     /**
@@ -53,7 +43,8 @@ class DocBlockParser
     /**
      * Use doctrine to parse the comment block and return the detected annotations.
      *
-     * @param string $comment a T_DOC_COMMENT
+     * @param string  $comment a T_DOC_COMMENT
+     * @param Context $context
      *
      * @return array<OA\AbstractAnnotation>
      */

@@ -1,5 +1,5 @@
 import { Map } from "immutable"
-import opsFilter from "core/plugins/filter/opsFilter"
+import opsFilter from "corePlugins/filter/opsFilter"
 
 describe("opsFilter", function() {
   const taggedOps = Map([["pet"], ["store"], ["user"]])
