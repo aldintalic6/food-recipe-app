@@ -1,14 +1,10 @@
 {
-    "messages": {
-    "atlant_message" : "Life @Atlantbh",
-    "guru_message" : "Successfully Logged in..."
-},
     "urls" : {
-    "site" : "http://localhost:8888/food-recipe-app/"
+    "site" : "https://flavorfinder.000webhostapp.com/food-recipe-app/"
 },
     "credentials" : {
-        "username" : "aldiin6",
-        "password" : "aldinaldin",
+        "username" : "testuser",    
+        "password" : "password123",
         "firstName" : "Newfirstname",
         "lastName" : "Newlastname",
         "email" : "aldintalic@mail.com",
