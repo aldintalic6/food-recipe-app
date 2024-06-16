@@ -1,0 +1,22 @@
+{
+    "messages": {
+    "atlant_message" : "Life @Atlantbh",
+    "guru_message" : "Successfully Logged in..."
+},
+    "urls" : {
+    "site" : "http://localhost:8888/food-recipe-app/"
+},
+    "credentials" : {
+        "username" : "aldiin6",
+        "password" : "aldinaldin",
+        "firstName" : "Newfirstname",
+        "lastName" : "Newlastname",
+        "email" : "aldintalic@mail.com",
+        "usernameRegister" : "testuser",
+        "passwordRegister" : "password123",
+        "firstnameRegister" : "Test",
+        "lastnameRegister" : "Test",
+        "emailRegister" : "Test@mail.com"
+}
+
+}
